@@ -1,0 +1,26 @@
+{
+  "name": "m25lazi",
+  "description": "Personal webpage @ m25lazi.herokuapp.com",
+  "main": "index.js",
+  "authors": [
+    "m25lazi"
+  ],
+  "license": "UNLICENSED",
+  "keywords": [
+    "mlazim",
+    "m25lazi",
+    "personal"
+  ],
+  "homepage": "https://github.com/m25lazi/mlazim-me",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-card": "PolymerElements/paper-card#~1.0.8"
+  }
+}

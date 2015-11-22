@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Lab Demo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../paper-card.html">
+
+  <style is="custom-style">
+    body {
+      background-color: var(--paper-grey-50);
+    }
+    #cards {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    paper-card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .avatar {
+      display: inline-block;
+      height: 64px;
+      width: 64px;
+      border-radius: 50%;
+      background: var(--paper-pink-500);
+      color: white;
+      line-height: 64px;
+      font-size: 30px;
+      text-align: center;
+    }
+    .fancy .title {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      color: var(--paper-indigo-500);
+    }
+    .fancy img {
+      width: 100%;
+    }
+    .fancy .big {
+      font-size: 22px;
+      padding: 8px 0 16px;
+      color: var(--google-grey-500);
+    }
+    .fancy .medium {
+      font-size: 16px;
+      padding-bottom: 8px;
+    }
+    .pink {
+      --paper-card-header-color: var(--paper-pink-500);
+    }
+  </style>
+
+</head>
+<body unresolved>
+  <div id="cards">
+
+    <paper-card heading="Some cards only have titles">
+      <div class="card-content">
+        <div>Cards are a convenient means of displaying content composed of different types of objects.
+          <br><br>
+          <b>Hurray!</b>
+        </div>
+      </div>
+    </paper-card>
+
+</body>
+</html>
