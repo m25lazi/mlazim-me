@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/m25lazi/mlazim-me#readme",
   "dependencies": {
+    "bower": "^0.6",
     "body-parser": "^1.14.1",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
