@@ -1,0 +1,74 @@
+#name{
+    
+    text-decoration: none;
+}
+
+.brown{
+    color: brown;
+    font-weight: bold;
+}
+
+.contact{
+    color: #4099ff;
+    font-weight: bold;
+}
+
+.page{
+    color: #d34836;
+    font-weight: bold;
+}
+
+.zucker{
+    color: #3b5998;
+    font-weight: bold;
+}
+
+.fork{
+    color: #000;
+    font-weight: bold;
+}
+
+.links {    
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+}
+
+
+
+#love{
+  color: #666;
+  font-size: 12px;
+  position: absolute;
+  bottom: 10px;
+  max-width: 500px;
+  left: auto;
+  right: auto;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+}
+#love a {
+  color: #000000;
+  text-decoration: none;
+}
+#love .fa {
+  color: #E90606;
+  margin: 3px 3px;
+  font-size: 10px;
+  animation: pound 0.35s infinite alternate;
+  -webkit-animation: pound 0.35s infinite alternate;
+}
+
+.fa-heart:before {
+    content: "\f004";
+}
+
+@-webkit-keyframes pound {
+  to {
+    transform: scale(1.1);
+  }
+}
+@keyframes pound {
+  to {
+    transform: scale(1.1);
+  }
+}

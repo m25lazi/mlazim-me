@@ -1,0 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Cutive+Mono);
+body {
+    font: 16px/20px 'Cutive Mono', serif;
+    background: white;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+.wrap {
+  padding-top: 150px;
+  max-width: 900px;
+  margin: 30px auto;
+  text-align: left;
+}
