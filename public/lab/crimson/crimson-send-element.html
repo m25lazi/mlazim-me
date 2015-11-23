@@ -1,0 +1,76 @@
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+      <link rel="import" href="bower_components/paper-card/paper-card.html">
+
+<dom-module id="crimson-send-element">
+  <template>
+      <style>
+          .sensor-input{
+              max-width: 50px;
+          }
+          
+          paper-card{
+            @apply(--layout-vertical);
+		    @apply(--center-justified);
+            margin-top: 20px;
+		    margin-right: auto;
+		    margin-left: auto;
+            --paper-card-header-color: var(--paper-pink-500);
+         }
+          
+          paper-button.orange {
+            color: var(--paper-pink-500);
+            --paper-button-flat-focus-color: var(--paper-pink-500);
+        }
+        paper-button.oranges:hover {
+            background: var(--paper-pink-500);
+        }
+      </style>
+      <iron-ajax 
+        id="putFirebaseAjax"
+        method="PUT"
+        content-type="application/json"
+        handle-as="json"
+        on-response = "handleResponse"
+        on-error = "handleError">
+      </iron-ajax>
+      
+      
+      
+      
+      <paper-card class='flex' id="main-paper-card" heading="Data Upload">
+            <div class="card-content" >
+                <paper-input label="Enter Device Name" value="{{devicename}}"></paper-input>
+                <paper-input class='sensor-input' label="Value" value="{{sensorvalue}}"></paper-input>
+                <paper-button class="orange" on-click='sendData'>Send</paper-button>
+            </div>
+      </paper-card>
+      
+  </template>
+  <script>
+    Polymer({
+        is: "crimson-send-element",
+        
+        ready:function(){
+            //this.hideLoading();
+        },
+        
+        sendData: function(){
+            var key = Math.floor($.now()/1000);
+            this.$.putFirebaseAjax.body = this.sensorvalue;
+            this.$.putFirebaseAjax.url = 'https://connect-them-rnd.firebaseio.com/devices/'+this.devicename+'/data/'+key+'.json';
+            this.$.putFirebaseAjax.generateRequest();
+        },
+        
+        showLoading: function(){
+            $("#loadingelement").show();
+        },
+        
+        hideLoading: function(){
+            $("#loadingelement").hide();
+        },
+        
+    });
+  </script>  
+</dom-module>

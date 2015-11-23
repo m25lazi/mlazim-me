@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Crimson Demo</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      
+      <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+      
+      <script src="../../bower_components/platform/platform.js"></script>
+      <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+      <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+      <link rel="import" href="../bower_components/paper-card/paper-card.html">
+      <link rel="import" href="../bower_components/paper-button/paper-button.html">
+      <link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
+      <link rel="import" href="../bower_components/paper-styles/color.html">
+      <link rel="import" href="../bower_components/paper-styles-classes.html">
+      <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+      <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+      <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+      <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+      <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+      <link rel="import" href="../bower_components/font-roboto/roboto.html">
+      
+      <link rel="import" href="crimson-fetch-element.html">
+      <link rel="import" href="crimson-send-element.html">
+      
+      <script>
+      
+      </script>
+    <style is="custom-style">
+        body {
+            background-color: var(--paper-grey-50); 
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px; 
+        }
+        paper-header-panel {
+            
+        }
+        
+        .content {
+            margin: 25px;
+        }
+        
+        .green paper-toolbar{
+            background-image: url("arduino_splash.png");
+            background-color: var(--paper-green-500);
+            @apply(--layout-vertical);
+            box-shadow:  0px 4px 10px -3px rgba(0, 0, 0, 0.3);
+            
+        }
+        
+        .pagetitle{
+            margin-top: 200px;
+            font-weight: 900;
+            font-size: 30px;
+        }
+        
+        
+        
+    </style>
+  </head>
+
+  <body class="fullbleed layout vertical">
+    <paper-header-panel mode="flex" class="green">
+        <paper-toolbar class="tall">
+            
+            <div class="title flex pagetitle">Arduino UNO 1</div>
+            
+            <div>
+                <paper-icon-button icon="filter-list"></paper-icon-button>
+                <paper-tooltip>Filter</paper-tooltip>
+            </div>
+            
+            <div>
+                <paper-icon-button icon="refresh"></paper-icon-button>
+                <paper-tooltip>Refresh</paper-tooltip>
+            </div>
+            
+            
+            
+        </paper-toolbar>
+        <div class="content">
+            <crimson-send-element></crimson-send-element>
+            
+            <br>
+            <crimson-fetch-element></crimson-fetch-element>
+        </div>
+    </paper-header-panel>
+</body>
+
+</html>

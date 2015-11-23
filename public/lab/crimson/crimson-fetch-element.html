@@ -1,0 +1,126 @@
+<link rel="import" href="bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="bower_components/firebase-element/firebase-document.html">
+      <link rel="import" href="bower_components/paper-card/paper-card.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+
+<dom-module id="crimson-fetch-element">
+  <template>
+      <style>
+          .card-content{
+            font-size: 15px;
+        }
+        
+        .card-content .sensorvalue{
+            color: crimson;
+        }
+        
+        .card-content .timestamp{
+            margin-top: 5px;
+            color: grey;
+            font-size: 10px;
+        }
+        
+        
+        paper-card{
+            @apply(--layout-vertical);
+		    @apply(--center-justified);
+            margin-top: 20px;
+		    margin-right: auto;
+		    margin-left: auto;
+            --paper-card-header-color: var(--paper-pink-500);
+        }
+          
+          paper-button.orange {
+            color: var(--paper-pink-500);
+            --paper-button-flat-focus-color: var(--paper-pink-500);
+        }
+        paper-button.oranges:hover {
+            background: var(--paper-pink-500);
+        }
+      </style>
+      <firebase-collection
+        id="connectthemrndfirebase"
+        order-by-key=true
+        limit-to-last="1"
+        log=true
+        data="{{unodata}}"
+        on-firebase-value="_firebaseLoaded"></firebase-collection>
+      
+      <paper-card class='flex' id="main-paper-card" heading="Data Download">
+            <div class="card-content" >
+                <paper-input label="Enter Device Name" value="{{devicename}}"></paper-input>
+                <paper-button class="orange" on-click='fetchLastData'>Latest Data</paper-button>
+                <paper-button class="orange" on-click='fetchDataInLast24Hour'>Last 24 hours</paper-button>
+                <paper-button class="orange" on-click="fetchDataInLastWeek">Last Week</paper-button>
+                <br>
+                <div id="loadingelement" class="loadinginfo">Loading...</div>
+                <br>
+                <template is="dom-repeat" items="[[unodata]]" as="singledata">
+                    <div class="sensorvalue">[[singledata.value]]</div>
+                    <div class="timestamp">Sent on [[getDate(singledata.__firebaseKey__)]]</div><br>
+                </template>
+            </div>
+      </paper-card>
+      
+  </template>
+  <script>
+    Polymer({
+        is: "crimson-fetch-element",
+        
+        ready:function(){
+            this.hideLoading();
+        },
+        
+        fetchLastData: function(){
+            this.showLoading();
+            this._createFirebaseLocation();
+            this.$.connectthemrndfirebase.limitToLast = 1;
+            this.$.connectthemrndfirebase.startAt = null;
+        },
+        
+        fetchDataInLast24Hour: function(){
+            this.showLoading();
+            var dateElement = Math.floor(($.now()/1000)-(60*60*24));
+            console.log("check from : "+dateElement);
+            this.$.connectthemrndfirebase.limitToLast = null;
+            this.$.connectthemrndfirebase.startAt = ''+dateElement;
+        },
+            
+        fetchDataInLastWeek: function(){
+            this.showLoading();
+            var dateElement = Math.floor(($.now()/1000)-(60*60*24*7));
+            console.log("check from : "+dateElement);
+            this.$.connectthemrndfirebase.limitToLast = null;
+            this.$.connectthemrndfirebase.startAt = ''+dateElement;
+        },
+        
+        getDate: function(value){
+            console.log(value);
+            var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+            d.setUTCSeconds(value);
+            console.log(d.toTimeString());
+            
+            return d.toDateString() + ' '+ d.toTimeString();
+        },
+        
+        _firebaseLoaded: function() {
+            
+            this.hideLoading();
+        },
+        
+        _createFirebaseLocation: function(){
+            this.$.connectthemrndfirebase.location = 'https://connect-them-rnd.firebaseio.com/devices/'+this.devicename+'/data';
+        },
+        
+        showLoading: function(){
+            $("#loadingelement").show();
+        },
+        
+        hideLoading: function(){
+            $("#loadingelement").hide();
+        },
+        
+    });
+  </script>  
+</dom-module>
