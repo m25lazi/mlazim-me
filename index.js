@@ -11,7 +11,7 @@ var firebase = require("firebase");
 var mosca = require('mosca');
 
 var settings = {
-  port: 1883
+  port: process.env.PORT || 1883
 };
 
 //here we start mosca
