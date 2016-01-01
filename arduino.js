@@ -118,7 +118,7 @@ JS key : BSjfDsbKKgzUGxImQLICwVf6qxpSa94WtWRxow1F
 
 //===================== CRIMSON REQD==============
 app.post('/api/alpha/user', function (req, res) {
-    
+    console.log("==== CREATE USER REQUEST : "+JSON.stringify(req.body));
     var username = req.body.username;
     var password = req.body.password;
     var emailid = req.body.email;
