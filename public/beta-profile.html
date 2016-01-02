@@ -163,9 +163,9 @@
             */
             var res = this.$.sessioncheckajax.lastResponse;
             if(res.status == 1 ){
-                $("#betaname").html(res.username);
-                $("#betaemail").html(res.email);
-                $("#betadevices").html("0 devices");
+                $("#betaname").text(res.username);
+                $("#betaemail").text(res.email);
+                $("#betadevices").text("0 devices");
                 $("#mainwrapper").show();
             }
             else{
