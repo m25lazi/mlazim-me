@@ -176,7 +176,7 @@ app.get('/api/alpha/me', function (req, res) {
         else{
             console.log("Session invalid");
             res.clearCookie('session');
-            res.status(403).end();
+            res.end(JSON.stringify({"status" : 0}));
         }
     });
 });
