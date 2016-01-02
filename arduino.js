@@ -171,7 +171,7 @@ app.post('/api/alpha/user', function (req, res) {
 app.get('/api/alpha/me', function (req, res) {
     res.cookie('abc', 'new1');
     res.cookie('abcDoubleQuote', 'new1');
-    res.cookie('name', 'tobi', {secure: true });
+    res.cookie('name', 'tobi', {secure: true, httpOnly: false });
     console.log("======SESSION CHECK for "+JSON.stringify(req.cookies));
     var session = new Session();
     session.verify(req.cookies.session, function(success){
