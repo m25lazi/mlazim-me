@@ -196,7 +196,7 @@ app.get('/api/alpha/user/:userid', function (req, res) {
     var query = new Parse.Query(Parse.User);
     query.get(userid, {
         success: function(user) {
-            console.log('Got profile from Parse : '+user);
+            console.log('Got profile from Parse : '+JSON.stringify(user));
             var response = JSON.stringify({"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {} });
             console.log(response);
             res.end(response);
