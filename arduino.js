@@ -169,6 +169,7 @@ app.post('/api/alpha/user', function (req, res) {
 });
 
 app.get('/api/alpha/me', function (req, res) {
+    res.cookie('cookietest', 'value', { domain: 'm25lazi.herokuapp.com', secure: true });
     res.cookie('abc', 'new1');
     res.cookie('abcDoubleQuote', 'new1');
     res.cookie('name', 'tobi', {secure: true, httpOnly: false });
