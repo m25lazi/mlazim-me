@@ -38,21 +38,21 @@
                 <paper-card>
 		          <div class="card-content">
                       <div class="card-title">username</div>
-                      <div class="card-item">m25lazi</div>
+                      <div class="card-item" id="betaname">m25lazi</div>
 		          </div>
 	           </paper-card>
             
                 <paper-card>
 		          <div class="card-content">
                       <div class="card-title">email</div>
-                      <div class="card-item">m25lazi@gmail.com</div>
+                      <div class="card-item" id="betaemail" >m25lazi@gmail.com</div>
 		          </div>
 	           </paper-card>
             
                 <paper-card>
 		          <div class="card-content">
                       <div class="card-title">devices</div>
-                      <div class="card-item">No devices</div>
+                      <div class="card-item" id="betadevices">No devices</div>
 		          </div>
 	           </paper-card>
             
@@ -101,18 +101,6 @@
             $("#mainwrapper").hide();
         },
         properties:{
-            email:{
-                type: String
-            },
-            password:{
-                type: String,
-            },
-            username:{
-                type: String
-            },
-            activationcode:{
-                type: String,
-            },
         },
 
 		submitForm: function(){
@@ -169,12 +157,19 @@
         onProfileResponse:function(e){
             console.log("onProfileResponse");
             console.log(this.$.sessioncheckajax.lastResponse);
+            /*
+                {"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {} }
+                {"status" : 0, "error" : error}
+            */
             var res = this.$.sessioncheckajax.lastResponse;
-            if(res.status == 0 ){
+            if(res.status == 1 ){
+                $("#betaname").html(res.username);
+                $("#betaemail").html(res.email);
+                $("#betadevices").html("0 devices");
                 $("#mainwrapper").show();
             }
             else{
-                alert("Already Logged in");
+                alert("Error fetching user data");
             }
         },
 
