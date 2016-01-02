@@ -197,9 +197,18 @@ app.get('/api/alpha/user/:userid', function (req, res) {
     query.get(userid, {
         success: function(user) {
             console.log('Got profile from Parse : '+JSON.stringify(user));
-            var response = JSON.stringify({"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {} });
-            console.log(response);
-            res.end(response);
+            
+            getDevicesForUser(userid, function(success, devices){
+                console.log('Got device list from FireBase');
+                console.log('status : '+success);
+                console.log('devices count : '+ devices.length);
+                console.log('devices : '+ devices);
+                
+                var response = JSON.stringify({"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {"count" : devices.length, "secretkeys" : devices} });
+                console.log(response);
+                res.end(response);
+            });
+            
         },
 
         error: function(object, error) {
@@ -241,6 +250,20 @@ function validateActivationCode(code, email, callback){
         }
     });
 };
+
+function getDevicesForUser(username, callback){
+    var deviceRef = 'crimson/alpha/users/'+username+'/devices';
+    crimsonDatabase.child(deviceRef).once("value", function(snap) {
+        console.log(snap.val());
+        var data = snap.val();
+        if(data){
+            callback(true, Object.keys(data));
+        }
+        else{
+            callback(false, []);
+        }
+    });
+}
 
 
 
