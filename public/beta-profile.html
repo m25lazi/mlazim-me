@@ -1,0 +1,186 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="import" href="bower_components/font-roboto/roboto.html">
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="bower_components/paper-card/paper-card.html">
+
+<dom-module id="beta-profile" >
+<template>
+<style>
+    paper-card{
+            margin-top: 20px;
+            width: 100%;
+            font-size: 14px;
+            color: black;
+            background-color: #A5D6A7;
+        }
+        .card-content{
+            padding: 5px;
+        }
+        
+        .card-title{
+            color: black;
+        }
+        .card-item{
+            color: #4CAF50;
+        }
+    
+    .submit{
+            margin-top: 20px;
+            width: 100%;
+            float: right;
+            font-size: 15px;
+        }
+    
+	</style>
+            <div id="mainwrapper">
+                <paper-card>
+		          <div class="card-content">
+                      <div class="card-title">username</div>
+                      <div class="card-item">m25lazi</div>
+		          </div>
+	           </paper-card>
+            
+                <paper-card>
+		          <div class="card-content">
+                      <div class="card-title">email</div>
+                      <div class="card-item">m25lazi@gmail.com</div>
+		          </div>
+	           </paper-card>
+            
+                <paper-card>
+		          <div class="card-content">
+                      <div class="card-title">devices</div>
+                      <div class="card-item">No devices</div>
+		          </div>
+	           </paper-card>
+            
+                <paper-button class="submit">Add a device</paper-button><br>
+            </div>
+    
+    <paper-toast id="toast-main" text="Loading..." opened duration=Infinity>
+    </paper-toast>
+    
+        <iron-ajax
+           id="betaacceptajax"
+           method="POST"
+           content-type="application/json"
+           url="https://m25lazi.herokuapp.com/api/alpha/user"
+           handle-as="json"
+           on-response="onActivationResponse">
+        </iron-ajax>
+    
+        <iron-ajax
+            auto
+           id="sessioncheckajax"
+           method="GET"
+           url="https://m25lazi.herokuapp.com/api/alpha/me"
+           handle-as="json"
+           on-response="onSessionResponse">
+        </iron-ajax>
+    
+        <iron-ajax
+           id="profileajax"
+           method="GET"
+           handle-as="json"
+           on-response="onProfileResponse">
+        </iron-ajax>
+    
+
+</template>
+
+
+<script>
+	Polymer({
+		is:"beta-profile",
+        ready: function(){
+            /*
+                Check Session token before going forward.
+            */
+            $("#mainwrapper").hide();
+        },
+        properties:{
+            email:{
+                type: String
+            },
+            password:{
+                type: String,
+            },
+            username:{
+                type: String
+            },
+            activationcode:{
+                type: String,
+            },
+        },
+
+		submitForm: function(){
+            console.log("submitForm");
+  		    this.sendLoginRequest();
+  		},
+        
+        createRequestBody:function(){
+            return JSON.stringify({ "username":this.username,
+                                    "code":this.activationcode,
+                                    "email":this.email,
+                                    "password":this.password});
+        },
+        sendLoginRequest:function(){
+            console.log("sendLoginRequest");
+            this.$.betaacceptajax.body=this.createRequestBody();
+            console.log(JSON.stringify(this.createRequestBody()));
+            this.$.betaacceptajax.generateRequest();
+        },
+        
+        sendProfileRequest:function(userid){
+            console.log("sendProfileRequest");
+            this.$.profileajax.url = 'https://m25lazi.herokuapp.com/api/alpha/'+userid;
+            this.$.profileajax.generateRequest();
+        },
+        
+        onActivationResponse:function(e){
+            console.log("onActivationResponse");
+            console.log(this.$.betaacceptajax.lastResponse);
+            var res = this.$.betaacceptajax.lastResponse;
+            if(res.status == 0 )
+                alert(res.error);
+            else
+                alert("SUCCESS");
+        },
+        
+        onSessionResponse:function(e){
+            console.log("onsSessionResponse");
+            console.log(this.$.sessioncheckajax.lastResponse);
+            /*
+                VALID SESSION {"status" : 1,"userId" : session.user }
+                INVALID SESSION {"status" : 0}
+            */
+            var res = this.$.sessioncheckajax.lastResponse;
+            if(res.status == 0 ){
+                alert("Invalid Session");
+            }
+            else{
+                console.login('Session valid. Go on & send profile request for '+res.userId+'...');
+                this.sendProfileRequest(res.userId);
+            }
+        },
+        
+        onProfileResponse:function(e){
+            console.log("onProfileResponse");
+            console.log(this.$.sessioncheckajax.lastResponse);
+            var res = this.$.sessioncheckajax.lastResponse;
+            if(res.status == 0 ){
+                $("#mainwrapper").show();
+            }
+            else{
+                alert("Already Logged in");
+            }
+        },
+
+		
+
+	});
+</script>
+
+</dom-module>
