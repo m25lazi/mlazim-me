@@ -132,6 +132,9 @@ app.post('/api/alpha/user', function (req, res) {
     var emailid = req.body.email;
     var activationCode = req.body.code;
     
+    res.cookie('new', "ABCTest");
+    res.cookie('new1', "r:l1Isr3Fx40F61Cvpn5yfhVmU6");
+    
     validateActivationCode(activationCode, emailid, function(success, errorCode){
         if(success){
             var user = new Parse.User();
@@ -166,7 +169,7 @@ app.post('/api/alpha/user', function (req, res) {
 });
 
 app.get('/api/alpha/me', function (req, res) {
-    console.log("======SESSION CHECK for "+req.cookies.session);
+    console.log("======SESSION CHECK for "+req.cookie.session);
     var session = new Session();
     session.verify(req.cookies.session, function(success){//
         if(success){
