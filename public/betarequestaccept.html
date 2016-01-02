@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Invite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="../bower_components/polymer/polymer.html">
+    
+    <link rel="import" href="beta-accept.html">
+	
+
+	<style is="custom-style">
+		body{
+            margin-left: 20px;
+            margin-right: 20px;
+			font-family: 'Roboto',sans-serif;
+			font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+		}
+        :root {
+        /* Label and underline color when the input is not focused */
+        --paper-input-container-color: white;
+
+        /* Label and underline color when the input is focused */
+        --paper-input-container-focus-color: green;
+
+        /* Label and underline color when the input is invalid
+        --paper-input-container-invalid-color: green;*/
+
+        /* Input foreground color */
+        --paper-input-container-input-color: black;
+        }
+        
+        .desc{
+            margin: auto;
+            max-width: 500px;
+            font-size: 14px;
+            line-height: 25px;
+        }
+        .submit{
+            margin-top: 20px;
+            width: 100%;
+            float: right;
+            font-size: 15px;
+        }
+        .main-wrapper{
+            max-width: 600px;
+            margin: auto;
+            
+        }
+        
+        .form-container{
+            max-width: 400px;
+            margin: auto;
+        }
+	</style>
+</head>
+
+<body>
+    <br>
+    Got invited for our closed beta?
+    <br><br><br><br>
+    
+    <div class="main-wrapper">
+        <div class="desc">
+            You may have got an invitation code from us via email. Enter your details along with that code for getting started!
+        </div>
+        
+        
+        <div class="form-container">
+            <beta-accept></beta-accept>
+            
+        </div>
+        
+        
+    </div>
+    
+
+</body>	
+</html>

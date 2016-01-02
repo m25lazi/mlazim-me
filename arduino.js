@@ -42,6 +42,8 @@ app.all('/*', function (req, res, next) {
     next();
 });
 
+app.use(express.static(__dirname + '/public'));
+
 
 app.get('/testpost', function (req, res) {
     console.log("GOT GET REQUEST FROM ARDUINO");
