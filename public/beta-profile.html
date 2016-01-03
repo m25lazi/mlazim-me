@@ -161,7 +161,7 @@
                 {"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {} }
                 {"status" : 0, "error" : error}
             */
-            var res = this.$.sessioncheckajax.lastResponse;
+            var res = this.$.profileajax.lastResponse;
             if(res.status == 1 ){
                 $("#betaname").text(res.username);
                 $("#betaemail").text(res.email);
