@@ -1,0 +1,134 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="import" href="../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="beta-add-device" >
+<template>
+<style>
+
+    paper-button{
+        width: 100%;
+        font-size: 15px;
+        margin-top: 20px;
+    }
+</style>
+            <div id="mainwrapper">
+            
+            <paper-input-container class="devicename-label">
+                <label>Device Name</label>
+                <input is="iron-input" value={{devicename::change}}>
+            </paper-input-container>
+            
+            <paper-input-container class="email-label">
+                <label>Device Secret Key (no space, use - )</label>
+                <input is="iron-input"  value={{devicesecretkey::change}}>
+            </paper-input-container>
+            
+            <paper-input-container class="email-label">
+                <label>Sync Interval (minutes)</label>
+                <input is="iron-input" value="2" disabled type="number"  value={{devicesyncinterval::change}}>
+            </paper-input-container>
+            
+            <paper-button class="submit" on-click="submitForm">Submit</paper-button><br>
+                
+            </div>
+    
+        <iron-ajax
+           id="createdeviceajax"
+           method="POST"
+           content-type="application/json"
+           url="https://m25lazi.herokuapp.com/api/alpha/devices"
+           handle-as="json"
+           on-response="onCreationResponse">
+        </iron-ajax>
+    
+        <iron-ajax
+            auto
+           id="sessioncheckajax"
+           method="GET"
+           url="https://m25lazi.herokuapp.com/api/alpha/me"
+           handle-as="json"
+           on-response="onSessionResponse">
+        </iron-ajax>
+    
+    <paper-toast id="toastmain" text="Loading..."  open duration=Infinity>
+    </paper-toast>
+    
+</template>
+
+
+<script>
+	Polymer({
+		is:"beta-add-device",
+        ready: function(){
+            /*
+                Check Session token before going forward.
+            */
+            $("#mainwrapper").hide();
+            $(".devicename-label").hide();
+        },
+        properties:{
+            devicename:{
+                type: String
+            },
+            devicesecretkey:{
+                type: String,
+            },
+            devicesyncinterval:{
+                type: String
+            }
+        },
+
+		submitForm: function(){
+            console.log("submitForm");
+            this.$.toastmain.open();
+  		    this.sendCreateDeviceRequest();
+  		},
+        
+        createRequestBody:function(){
+            return JSON.stringify({ "name":this.devicename,
+                                    "devicesecret":this.devicesecretkey,
+                                    "syncinterval":this.devicesyncinterval
+                                  });
+        },
+        sendCreateDeviceRequest:function(){
+            console.log("sendCreateDeviceRequest");
+            this.$.createdeviceajax.body=this.createRequestBody();
+            console.log(JSON.stringify(this.createRequestBody()));
+            this.$.createdeviceajax.generateRequest();
+        },
+        
+        onCreationResponse:function(e){
+            console.log("onCreationResponse");
+            this.$.toastmain.close();
+            console.log(this.$.createdeviceajax.lastResponse);
+            var res = this.$.createdeviceajax.lastResponse;
+            if(res.status == 0 )
+                alert(res.error);
+            else
+                alert("SUCCESS");
+        },
+        
+        onSessionResponse:function(e){
+            this.$.toastmain.close();
+            console.log("onsSessionResponse");
+            console.log(this.$.sessioncheckajax.lastResponse);
+            var res = this.$.sessioncheckajax.lastResponse;
+            if(res.status == 0 ){
+                alert("Already Logged in");
+            }
+            else{
+                $("#mainwrapper").show();
+            }
+        }
+
+		
+
+	});
+</script>
+
+</dom-module>
