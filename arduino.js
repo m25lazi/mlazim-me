@@ -50,6 +50,13 @@ app.get('/testpost', function (req, res) {
     res.end(JSON.stringify({'status': 1}));
 });
 
+app.get('/api/test/user', function (req, res) {
+    console.log("======TEST REQUEST for ");
+    var response = JSON.stringify({"status" : 1,"userId" : userid, "username" : "ABCD", "email": "testuser@iostreamh.com", "devices" : {"count" : 0, "secretkeys" : []} });
+    console.log(response);            
+    res.end(response);
+});
+
 app.post('/api/m25lazi/uno0025', function (req, res) {
     console.log("GOT DATA FROM ARDUINO : "+JSON.stringify(req.body));
     var epochTime = Math.floor((new Date).getTime()/1000); 
