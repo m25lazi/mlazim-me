@@ -52,7 +52,7 @@ app.get('/testpost', function (req, res) {
 
 app.get('/api/test/user', function (req, res) {
     console.log("======TEST REQUEST for ");
-    var response = JSON.stringify({"status" : 1,"userId" : userid, "username" : "ABCD", "email": "testuser@iostreamh.com", "devices" : {"count" : 0, "secretkeys" : []} });
+    var response = JSON.stringify({"status" : 1, "username" : "ABCD", "email": "testuser@iostreamh.com", "devices" : {"count" : 0, "secretkeys" : []} });
     console.log(response);            
     res.end(response);
 });
