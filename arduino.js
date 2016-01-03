@@ -354,6 +354,7 @@ function canCreateDeviceForUser(username, callback){
 };
 
 function getDevicesForUser(username, callback){
+    console.log('Fetch devices for user - '+username);
     var deviceRef = 'crimson/alpha/users/'+username+'/devices';
     crimsonDatabase.child(deviceRef).once("value", function(snap) {
         console.log(snap.val());
@@ -369,6 +370,7 @@ function getDevicesForUser(username, callback){
 
 function createDeviceForUser(username, deviceSecret, callback){
     var deviceRefUnderUser = 'crimson/alpha/users/'+username+'/devices/'+deviceSecret;
+    //TODO : Check device name is already there or not
     crimsonDatabase.child(deviceRefUnderUser).set(true, function(error){
         if(error){
             console.log('Synchronization failed for creating device under user');
