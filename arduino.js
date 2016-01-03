@@ -206,6 +206,7 @@ app.get('/api/alpha/user/:userid', function (req, res) {
             console.log('Got profile from Parse : '+JSON.stringify(user));
             
             getDevicesForUser(userid, function(success, devices){
+            getDevicesForUser(user.getUsername(), function(success, devices){
                 console.log('Got device list from FireBase');
                 console.log('status : '+success);
                 console.log('devices count : '+ devices.length);
