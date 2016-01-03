@@ -219,6 +219,58 @@ app.get('/api/alpha/user/:userid', function (req, res) {
     });
 });
 
+app.post('/api/alpha/devices', function (req, res) {
+    console.log("==== CREATE DEVICE REQUEST : "+JSON.stringify(req.body));
+    
+    isSessionValidForToken(req.cookies.session, function(valid, userid){
+        if(valid){
+            getUserDetailsFromId(userid, function(success, user){
+                if(success){
+                    var username = user.getUsername();
+                    canCreateDeviceForUser(username, function(canCreate){
+                        if(canCreate){
+                            var deviceSecret = req.body.devicesecret;
+                            var syncInterval = req.body.syncinterval;
+                            createDeviceForUser(username, deviceSecret, function(created, errorcode){
+                                if(created){
+                                    var response = JSON.stringify({"status" : 1});
+                                    console.log(response);
+                                    res.end(response);
+                                }
+                                else{
+                                    var response = JSON.stringify({"status" : 0, "error" : errorcode});
+                                    console.log(response);
+                                    res.end(response);
+                                }
+                            });
+                        }
+                        else{
+                            var response = JSON.stringify({"status" : 0, "error" : "All 3 devices created"});
+                            console.log(response);
+                            res.end(response);
+                        }
+                    });
+                }
+                else{
+                    var response = JSON.stringify({"status" : 0, "error" : "Error getting user details"});
+                    console.log(response);
+                    res.end(response);
+                }
+                
+            });
+            
+        }
+        else{
+            var response = JSON.stringify({"status" : 0, "error" : "Session invalid"});
+            console.log(response);
+            res.end(response);
+        }
+    });
+    
+    
+    
+});
+
 
 ///=======HELPERS
 
@@ -251,6 +303,49 @@ function validateActivationCode(code, email, callback){
     });
 };
 
+function isSessionValidForToken(sessionToken, callback){
+    var session = new Session();
+    session.verify(sessionToken, function(success){
+        if(success){
+            var userid = session.user;
+            callback(true, userid);
+        }
+        else{
+            callback(false, null);
+        }
+    });
+};
+
+//user is Parse Object : "userId" : userid, "username" : user.getUsername(), "email": user.getEmail()
+function getUserDetailsFromId(userid, callback){
+    var query = new Parse.Query(Parse.User);
+    query.get(userid, {
+        success: function(user) {
+            console.log('Got profile from Parse : '+JSON.stringify(user));
+            callback(true, user);
+        },
+
+        error: function(object, error) {
+            console.log('Error in getting profile : '+ JSON.stringify(error));
+            callback(false, null);
+        }
+    });
+}
+
+
+
+
+///=======DEVICES
+function canCreateDeviceForUser(username, callback){
+    var maxDevicesForUser = 3;
+    getDevicesForUser(username, function(success, deviceList){
+        if(deviceList.length<=maxDevicesForUser)
+            callback(true);
+        else
+            callback(false);
+    });
+};
+
 function getDevicesForUser(username, callback){
     var deviceRef = 'crimson/alpha/users/'+username+'/devices';
     crimsonDatabase.child(deviceRef).once("value", function(snap) {
@@ -263,6 +358,33 @@ function getDevicesForUser(username, callback){
             callback(false, []);
         }
     });
+}
+
+function createDeviceForUser(username, deviceSecret, callback){
+    var deviceRefUnderUser = 'crimson/alpha/users/'+username+'/devices/'+deviceSecret;
+    crimsonDatabase.child(deviceRefUnderUser).set(true, function(error){
+        if(error){
+            console.log('Synchronization failed for creating device under user');
+            callback(false, -1);
+        }
+        else{
+            
+            var deviceRefUnderDevices = 'crimson/alpha/devices/'+deviceSecret+'/createdon';
+            var currentEpochTime = Math.floor((new Date).getTime()/1000); 
+            console.log('Setting createdon for device : '+currentEpochTime);
+            crimsonDatabase.child(deviceRefUnderDevices).set(currentEpochTime, function(error){
+                if(error){
+                    console.log('Synchronization failed for setting createdon time under devices');
+                    callback(false, -2);
+                }
+                else{
+                    callback(true, 0);
+                }
+            });
+        }
+    });
+    
+    
 }
 
 
