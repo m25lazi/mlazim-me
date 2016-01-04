@@ -415,12 +415,14 @@ function createDeviceForUser(username, deviceSecret, callback){
         }
         else{
             
-            var deviceRefUnderDevices = 'crimson/alpha/devices/'+deviceSecret+'/createdon';
+            var deviceRefUnderDevices = 'crimson/alpha/devices/'+deviceSecret;
+            
             var currentEpochTime = Math.floor((new Date).getTime()/1000); 
-            console.log('Setting createdon for device : '+currentEpochTime);
-            crimsonDatabase.child(deviceRefUnderDevices).set(currentEpochTime, function(error){
+            var deviceData = {"createdon" : currentEpochTime, "owner" : username};
+            console.log('Setting createdon for device : '+JSON.stringify(deviceData));
+            crimsonDatabase.child(deviceRefUnderDevices).set(deviceData, function(error){
                 if(error){
-                    console.log('Synchronization failed for setting createdon time under devices');
+                    console.log('Synchronization failed for setting data under devices');
                     callback(false, -2);
                 }
                 else{
