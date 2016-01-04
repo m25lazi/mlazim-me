@@ -197,6 +197,43 @@ app.get('/api/alpha/me', function (req, res) {
     });
 });
 
+app.post('/api/alpha/login', function (req, res) {
+    console.log("==== LOGIN REQUEST : "+JSON.stringify(req.body));
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    
+    Parse.User.logIn(username, password, {
+        success: function(user){
+            console.log(JSON.stringify(user));
+            console.log('USER ID : '+user.id);
+            console.log('SESSION TOKEN : '+user.getSessionToken());
+                    
+            res.cookie('session', user.getSessionToken());
+            res.end(JSON.stringify({"status" : 1, "userid" : user.id, "session" : user.getSessionToken()}));
+        },
+        error: function(user, error){
+            //{"code":101,"message":"invalid login parameters"}
+            console.log('ERROR : '+JSON.stringify(error));
+            res.clearCookie('session');
+            res.end(JSON.stringify({"status" : 0, "error" : JSON.stringify(error)}));
+        }
+    });
+    
+});
+
+
+
+app.get('/api/alpha/logout', function (req, res) {
+    console.log("======LOGOUT for "+req.cookies.session);
+    //TODO : do something else for server side also!
+    // currently deleting session from cookie.
+    
+    res.clearCookie('session');
+    res.end(JSON.stringify({"status" : 1}));
+    
+});
+
 app.get('/api/alpha/user/:userid', function (req, res) {
     var userid = req.params.userid;
     console.log("======PROFILE REQUEST for "+userid);
