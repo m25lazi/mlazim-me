@@ -176,7 +176,7 @@
                         $("#betadevices").text("3 Devices (You've reached your device limits. Contact us for more info.)");
                     }
                     $("#devicelistid").show();
-                    for (var index = 0;  index< res.devices.count; ++i) {
+                    for (var index = 0;  index< res.devices.count; ++index) {
                         var devicekey = res.devices.secretkeys[index];
                         var devicePolymerElement = document.createElement('beta-device-element');
                         devicePolymerElement.devicename = devicekey;
