@@ -1,0 +1,45 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="import" href="bower_components/font-roboto/roboto.html">
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+
+<dom-module id="beta-device-element" >
+<template>
+<style>
+
+    paper-button{
+        width: 100%;
+        font-size: 15px;
+        margin-top: 20px;
+        text-transform: none;
+        text-align: left;
+    }
+</style>
+            <paper-button on-click="gotoDevicePage">{{devicename}}</paper-button><br>
+    
+</template>
+
+
+<script>
+	Polymer({
+		is:"beta-device-element",
+        ready: function(){
+           
+        },
+        properties:{
+            devicename:{
+                type: String,
+                value:"testdevice"
+            }
+        },
+
+		gotoDevicePage: function(){
+            console.log('Redirect to '+this.devicename);
+  		}
+
+		
+
+	});
+</script>
+
+</dom-module>

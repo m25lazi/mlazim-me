@@ -5,6 +5,8 @@
 <link rel="import" href="bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="bower_components/paper-card/paper-card.html">
 
+<link rel="import" href="beta-device-element.html">
+
 <dom-module id="beta-profile" >
 <template>
 <style>
@@ -53,6 +55,8 @@
 		          <div class="card-content">
                       <div class="card-title">devices</div>
                       <div class="card-item" id="betadevices">No devices</div>
+                      <div id="devicelistid"></div>
+                      
 		          </div>
 	           </paper-card>
             
@@ -63,15 +67,6 @@
     </paper-toast>
     
         <iron-ajax
-           id="betaacceptajax"
-           method="POST"
-           content-type="application/json"
-           url="https://m25lazi.herokuapp.com/api/alpha/user"
-           handle-as="json"
-           on-response="onActivationResponse">
-        </iron-ajax>
-    
-        <iron-ajax
             auto
            id="sessioncheckajax"
            method="GET"
@@ -80,7 +75,7 @@
            on-response="onSessionResponse">
         </iron-ajax>
     
-        <iron-ajax
+    <iron-ajax
            id="profileajax"
            method="GET"
            handle-as="json"
@@ -99,6 +94,8 @@
                 Check Session token before going forward.
             */
             $("#mainwrapper").hide();
+            $("#devicelistid").hide();
+            
         },
         properties:{
         },
@@ -158,14 +155,38 @@
             console.log("onProfileResponse");
             console.log(this.$.profileajax.lastResponse);
             /*
-                {"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {} }
+                {"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {"count" : devices.length, "secretkeys" : devices}
                 {"status" : 0, "error" : error}
             */
             var res = this.$.profileajax.lastResponse;
             if(res.status == 1 ){
                 $("#betaname").text(res.username);
                 $("#betaemail").text(res.email);
-                $("#betadevices").text("0 devices");
+                if(res.devices.count === 0){
+                    $("#betadevices").text("No Devices! Let's create one.");
+                }
+                else{
+                    if(res.devices.count === 1){
+                        $("#betadevices").text("1 Device (You can create upto 3 devices)");
+                    }
+                    else if(res.devices.count === 2){
+                        $("#betadevices").text("2 Devices (You can create upto 3 devices)");
+                    }
+                    else if(res.devices.count === 3){
+                        $("#betadevices").text("3 Devices (You've reached your device limits. Contact us for more info.)");
+                    }
+                    $("#devicelistid").show();
+                    for (var index = 0;  index< res.devices.count; ++i) {
+                        var devicekey = res.devices.secretkeys[index];
+                        var devicePolymerElement = document.createElement('beta-device-element');
+                        devicePolymerElement.devicename = devicekey;
+                        $('#devicelistid').append(devicePolymerElement);
+                    }
+                }
+                
+                else 
+                
+                
                 $("#mainwrapper").show();
             }
             else{
