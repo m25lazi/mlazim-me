@@ -93,7 +93,7 @@
             else{
                 if(res.devicedata){
                     var epochTimeArray = Object.keys(res.devicedata);
-                    for (var index = 0;  index< epochTimeArray.count; ++index) {
+                    for (var index = 0;  index< epochTimeArray.length; ++index) {
                         var epochTime = epochTimeArray[index];
                         var deviceValue = res.devicedata[epochTime];
                         
