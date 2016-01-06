@@ -85,8 +85,8 @@
         onDataResponse:function(e){
             console.log("onDataResponse");
             this.$.toastmain.close();
-            console.log(this.$.createdeviceajax.lastResponse);
-            var res = this.$.createdeviceajax.lastResponse;
+            console.log(this.$.onDataResponse.lastResponse);
+            var res = this.$.onDataResponse.lastResponse;
             //{"status":1,"devicedata":{"1450718186":23,"1450718195":23.7,"1450718207":22}}
             if(res.status == 0 )
                 alert(res.error);
