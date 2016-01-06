@@ -315,56 +315,6 @@ app.post('/api/alpha/devices', function (req, res) {
     
 });
 
-app.get('/api/alpha/devices/:devicesecret', function (req, res) {
-    var deviceSecret = req.params.devicesecret;
-    console.log("======DEVICE DATA REQUEST for "+deviceSecret);
-    
-    isSessionValidForToken(req.cookies.session, function(valid, userid){
-        if(valid){
-            getUserDetailsFromId(userid, function(fetched, user){
-                if(fetched){
-                    var username = user.getUsername();
-                    var deviceRefUnderDevices = 'crimson/alpha/devices/'+deviceSecret;
-                    crimsonDatabase.child(deviceRefUnderDevices).once("value", function(snap) {
-                        console.log(snap.val());
-                        var deviceData = snap.val();
-                        if(deviceData){
-                            if(deviceData.owner === username){
-                                var response = JSON.stringify({"status" : 1, "devicedata" : deviceData.data});
-                                console.log(response);
-                                res.end(response);
-                            }
-                            else{
-                                var response = JSON.stringify({"status" : 0, "error" : "User dont have access for this device"});
-                                console.log(response);
-                                res.end(response);
-                            }
-                        }
-                        else{
-                            var response = JSON.stringify({"status" : 0, "error" : "No such device"});
-                            console.log(response);
-                            res.end(response);
-                        }
-                    });
-                    
-                }
-                else{
-                    var response = JSON.stringify({"status" : 0, "error" : "Error getting user details"});
-                    console.log(response);
-                    res.end(response);
-                }
-            });
-            
-        }
-        else{
-            var response = JSON.stringify({"status" : 0, "error" : "Session invalid"});
-            console.log(response);
-            res.end(response);
-        }
-    });
-    
-});
-
 
 ///=======HELPERS
 
