@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>JustTypeItJS - Demo</title>
+        <link rel="stylesheet" type="text/css" href="css/typeIt.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="js/JustTypeIt.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                justTypeIt([typingElement('#salutation', 300, 500), 
+                        typingElement('#intro1', 100, 0), 
+                        typingElement('#intro2', 10, 250), 
+                        typingElement('#intro3', 100, 0),
+                        typingElement('#change1', 50, 0), 
+                        typingElement('#change2', 100, 250), 
+                        typingElement('#change3', 100, 0)]);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div id="salutation" data-text="Hi guys..."></div> <br>
+            <div>
+                <span id="intro1" data-text="This is just "></span>
+                <span id="intro2" class="brown" data-text="a demo how u can "></span>
+                <span id="intro3" data-text="add type writing effect in your web pages"></span>
+            </div>
+            <br>
+            <div>
+                <span id="change1" data-text="You can adjust the typing speed,"></span>
+                <span id="change2" data-text="wait time, "></span>
+                <span id="change3" data-text="order of elements typing"></span>
+            </div>
+        </div>
+        
+    </body>
+</html>
