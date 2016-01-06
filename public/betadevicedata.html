@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Device Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+	<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="bower_components/polymer/polymer.html">
+	
+
+	<style is="custom-style">
+		body{
+            margin-left: 20px;
+            margin-right: 20px;
+			font-family: 'Roboto',sans-serif;
+			font-size: 20px;
+            background-color: #009688;
+            color: white;
+		}
+        :root {
+        /* Label and underline color when the input is not focused */
+        --paper-input-container-color: white;
+
+        /* Label and underline color when the input is focused */
+        --paper-input-container-focus-color: #004D40;
+
+        /* Label and underline color when the input is invalid
+        --paper-input-container-invalid-color: green;*/
+
+        /* Input foreground color */
+        --paper-input-container-input-color: black;
+        }
+        
+        .desc{
+            margin: auto;
+            max-width: 500px;
+            font-size: 14px;
+            line-height: 25px;
+        }
+        .submit{
+            margin-top: 20px;
+            width: 100%;
+            float: right;
+            font-size: 15px;
+        }
+        .main-wrapper{
+            max-width: 600px;
+            margin: auto;
+            
+        }
+        
+        .form-container{
+            max-width: 400px;
+            margin: auto;
+        }
+        
+        
+        
+	</style>
+</head>
+
+<body>
+    <br>
+        <div>Device Data</div>
+            
+        <br><br>
+    
+    <div class="main-wrapper">
+        
+        <div class="desc">
+            Data sent by the device selected. No filters are currently available in this build. Latest 100 values are stored and shown. 
+        </div>
+        
+        
+        <div class="form-container">
+            <div class="data-card">
+                <div class="card-title">25.2</div>
+                <div class="card-item">Sent on 25-Dec-2015 14:15</div>
+		    </div>
+            
+            <div class="data-card">
+                <div class="card-title">25.8</div>
+                <div class="card-item">Sent on 25-Dec-2015 14:12</div>
+		    </div>
+            
+            
+        </div>
+        
+        
+    </div>
+    
+
+</body>	
+</html>
