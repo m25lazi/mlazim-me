@@ -91,11 +91,12 @@
         
         onActivationResponse:function(e){
             console.log("onActivationResponse");
-            this.$.toastmain.close();
             console.log(this.$.betaacceptajax.lastResponse);
             var res = this.$.betaacceptajax.lastResponse;
-            if(res.status == 0 )
+            if(res.status == 0 ){
+                this.$.toastmain.close();
                 alert(res.error);
+            }
             else{
                 console.log('Login success. Redirecting to profile page');
                 window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
@@ -103,11 +104,12 @@
         },
         
         onSessionResponse:function(e){
-            this.$.toastmain.close();
+            
             console.log("onsSessionResponse");
             console.log(this.$.sessioncheckajax.lastResponse);
             var res = this.$.sessioncheckajax.lastResponse;
             if(res.status == 0 ){
+                this.$.toastmain.close();
                 $("#mainwrapper").show();
             }
             else{
