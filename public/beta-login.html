@@ -61,6 +61,7 @@
                 Check Session token before going forward.
             */
             $("#mainwrapper").hide();
+            this.$.toastmain.open();
         },
         properties:{
             password:{
@@ -100,6 +101,7 @@
         },
         
         onSessionResponse:function(e){
+            this.$.toastmain.close();
             console.log("onsSessionResponse");
             console.log(this.$.sessioncheckajax.lastResponse);
             var res = this.$.sessioncheckajax.lastResponse;
@@ -107,7 +109,8 @@
                 $("#mainwrapper").show();
             }
             else{
-                alert("Already Logged in");
+                console.log('Already logged in. Redirecting to profile page');
+                window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
             }
         }
 
