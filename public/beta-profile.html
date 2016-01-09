@@ -150,6 +150,8 @@
             if(res.status == 0 ){
                 this.$.toastmain.close();
                 alert("Invalid Session");
+                var url = "https://m25lazi.herokuapp.com/betalogin.html";
+                window.location.replace(url);
             }
             else{
                 console.log('Session valid. Go on & send profile request for '+res.userId+'...');

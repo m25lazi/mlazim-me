@@ -7,6 +7,7 @@
 <link rel="import" href="bower_components/paper-toast/paper-toast.html">
 
 <link rel="import" href="beta-device-data-element.html">
+<link rel="import" href="beta-logout-ribbon.html">
 
 <dom-module id="beta-device-data" >
 <template>
@@ -19,7 +20,7 @@
     }
 </style>
             <div id="mainwrapper">
-            
+            <beta-logout-ribbon.html id="logoutribbon"></beta-logout-ribbon.html>
             
                 
             </div>
@@ -66,6 +67,8 @@
             
             this.devicesecret = deviceid;
             console.log(this.devicesecret);
+            
+            this.$.toastmain.open();
             
         },
         properties:{
@@ -114,7 +117,9 @@
                     }
                 }
                 else{
-                    
+                    var noDataElement = document.createElement('p');
+                    noDataElement.value = "No Data to display";
+                    $('#mainwrapper').append(noDataElement);
                 }
             }
                 
@@ -125,9 +130,13 @@
             console.log(this.$.sessioncheckajax.lastResponse);
             var res = this.$.sessioncheckajax.lastResponse;
             if(res.status == 0 ){
+                this.$.toastmain.close();
                 alert("Not Logged in");
+                var url = "https://m25lazi.herokuapp.com/betalogin.html";
+                window.location.replace(url);
             }
             else{
+                this.$.logoutribbon.show();
                 $("#mainwrapper").show();
                 this.sendDeviceDataRequest();
             }
