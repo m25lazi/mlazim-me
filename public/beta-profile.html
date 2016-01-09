@@ -63,7 +63,7 @@
                 <paper-button class="submit"  on-click="addDevice" id="addDeviceButton">Add a device</paper-button><br>
             </div>
     
-    <paper-toast id="toast-main" text="Loading..." opened duration=Infinity>
+    <paper-toast id="toastmain" text="Loading..." duration=Infinity>
     </paper-toast>
     
         <iron-ajax
@@ -95,6 +95,7 @@
             */
             $("#mainwrapper").hide();
             $("#devicelistid").hide();
+            this.$.toastmain.open();
             
         },
         properties:{
@@ -143,6 +144,7 @@
             */
             var res = this.$.sessioncheckajax.lastResponse;
             if(res.status == 0 ){
+                this.$.toastmain.close();
                 alert("Invalid Session");
             }
             else{
@@ -153,6 +155,7 @@
         
         onProfileResponse:function(e){
             console.log("onProfileResponse");
+            this.$.toastmain.close();
             console.log(this.$.profileajax.lastResponse);
             /*
                 {"status" : 1,"userId" : userid, "username" : user.getUsername(), "email": user.getEmail(), "devices" : {"count" : devices.length, "secretkeys" : devices}
@@ -172,7 +175,7 @@
                     else if(res.devices.count === 2){
                         $("#betadevices").text("2 Devices (You can create upto 3 devices)");
                     }
-                    else if(res.devices.count === 3){
+                    else{
                         $('#addDeviceButton').prop('disabled', true);
                         $("#betadevices").text("3 Devices (You've reached your device limits. Contact us for more info.)");
                     }
