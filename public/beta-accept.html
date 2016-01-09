@@ -109,13 +109,16 @@
         
         onActivationResponse:function(e){
             console.log("onActivationResponse");
-            this.$.toastmain.close();
             console.log(this.$.betaacceptajax.lastResponse);
             var res = this.$.betaacceptajax.lastResponse;
-            if(res.status == 0 )
+            if(res.status == 0 ){
+                this.$.toastmain.close();
                 alert(res.error);
-            else
-                alert("SUCCESS");
+            }
+            else{
+                console.log('Already logged in. Redirecting to profile page');
+                window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
+            }
         },
         
         onSessionResponse:function(e){
