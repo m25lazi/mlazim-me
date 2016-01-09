@@ -6,6 +6,7 @@
 <link rel="import" href="bower_components/paper-card/paper-card.html">
 
 <link rel="import" href="beta-device-element.html">
+<link rel="import" href="beta-logout-ribbon.html">
 
 <dom-module id="beta-profile" >
 <template>
@@ -37,6 +38,9 @@
     
 	</style>
             <div id="mainwrapper">
+                
+                <beta-logout-ribbon id="logoutRibbon"></beta-logout-ribbon>
+                
                 <paper-card>
 		          <div class="card-content">
                       <div class="card-title">username</div>
@@ -149,6 +153,7 @@
             }
             else{
                 console.log('Session valid. Go on & send profile request for '+res.userId+'...');
+                this.$.logoutRibbon.show();
                 this.sendProfileRequest(res.userId);
             }
         },

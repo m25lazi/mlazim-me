@@ -1,0 +1,81 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="import" href="bower_components/font-roboto/roboto.html">
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="beta-logout-ribbon" >
+<template>
+<style>
+
+    paper-button{
+        font-size: 12px;
+        margin-top: 20px;
+        float : right;
+    }
+	</style>
+            <div id="mainribbon">
+                <paper-button on-click="onLogoutPressed">Logout</paper-button>
+            </div>
+    
+        <iron-ajax
+           auto
+           id="logoutajax"
+           method="GET"
+           content-type="application/json"
+           handle-as="json"
+           on-response="onLogoutResponse">
+        </iron-ajax>
+    
+    <paper-toast id="logoutToast" text="Loading...">
+    </paper-toast>
+    
+</template>
+
+
+<script>
+	Polymer({
+		is:"beta-logout-ribbon",
+        ready: function(){
+            $("#mainribbon").hide();
+        },
+        properties:{
+            password:{
+                type: String,
+            },
+            username:{
+                type: String
+            }
+            
+        },
+        
+        show: function(){
+            $("#mainribbon").show();
+        },
+    
+
+		onLogoutPressed: function(){
+            console.log("onLogoutPressed");
+            this.$.logoutToast.open();
+            this.$.logoutajax.url = "https://m25lazi.herokuapp.com/api/alpha/logout";
+  		},
+        
+        onLogoutResponse:function(e){
+            console.log("onLogoutResponse");
+            console.log(this.$.logoutajax.lastResponse);
+            var res = this.$.logoutajax.lastResponse;
+            if(res.status == 0 ){
+                this.$.logoutToast.close();
+                alert('Logout Failed');
+            }
+            else
+                window.location.replace("https://m25lazi.herokuapp.com/betalogin.html");
+        }
+
+		
+
+	});
+</script>
+
+</dom-module>
