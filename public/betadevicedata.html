@@ -78,7 +78,7 @@
         
         
         <div class="desc">
-            <paper-button on-click="window.location.replace('https://m25lazi.herokuapp.com/betaprofile.html');"><iron-icon icon="chevron-left"></iron-icon>Back</paper-button>
+            <paper-button onclick="openProfile()"></iron-icon>Profile</paper-button>
             <br>
             Data sent by the device selected. No filters are currently available in this build. Latest 100 values are stored and shown. 
         </div>
@@ -94,6 +94,13 @@
         
     </div>
     
+    
+    <script>
+    function openProfile(selector) {
+      console.log('opening profile');
+      window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
+    }
+  </script>
 
 </body>	
 </html>
