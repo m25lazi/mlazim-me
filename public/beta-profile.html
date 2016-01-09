@@ -60,7 +60,7 @@
 		          </div>
 	           </paper-card>
             
-                <paper-button class="submit">Add a device</paper-button><br>
+                <paper-button class="submit"  on-click="addDevice" id="addDeviceButton">Add a device</paper-button><br>
             </div>
     
     <paper-toast id="toast-main" text="Loading..." opened duration=Infinity>
@@ -100,9 +100,9 @@
         properties:{
         },
 
-		submitForm: function(){
+		addDevice: function(){
             console.log("submitForm");
-  		    this.sendLoginRequest();
+            window.location.replace("https://m25lazi.herokuapp.com/betadeviceadd.html")
   		},
         
         createRequestBody:function(){
@@ -173,6 +173,7 @@
                         $("#betadevices").text("2 Devices (You can create upto 3 devices)");
                     }
                     else if(res.devices.count === 3){
+                        $('#addDeviceButton').prop('disabled', true);
                         $("#betadevices").text("3 Devices (You've reached your device limits. Contact us for more info.)");
                     }
                     $("#devicelistid").show();

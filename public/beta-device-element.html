@@ -34,7 +34,8 @@
         },
 
 		gotoDevicePage: function(){
-            console.log('Redirect to '+this.devicename);
+            var url = "https://m25lazi.herokuapp.com/betadevicedata.html?secret="+this.devicename;
+            window.location.replace(url)
   		}
 
 		
