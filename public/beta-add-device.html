@@ -33,7 +33,7 @@
                 <input is="iron-input" value="2" disabled type="number"  value={{devicesyncinterval::change}}>
             </paper-input-container>
             
-            <paper-button class="submit" on-click="submitForm">Submit</paper-button><br>
+            <paper-button class="submit" on-click="submitForm">Create</paper-button><br>
                 
             </div>
     
@@ -104,11 +104,13 @@
         
         onCreationResponse:function(e){
             console.log("onCreationResponse");
-            this.$.toastmain.close();
+            
             console.log(this.$.createdeviceajax.lastResponse);
             var res = this.$.createdeviceajax.lastResponse;
-            if(res.status == 0 )
+            if(res.status == 0 ){
+                this.$.toastmain.close();
                 alert(res.error);
+            }
             else{
                 console.log('opening profile');
                 window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");

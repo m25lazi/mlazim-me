@@ -116,7 +116,7 @@
                 alert(res.error);
             }
             else{
-                console.log('Already logged in. Redirecting to profile page');
+                console.log('Account created. Redirecting to profile page');
                 window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
             }
         },
@@ -129,7 +129,8 @@
                 $("#mainwrapper").show();
             }
             else{
-                alert("Already Logged in");
+                console.log('Already logged in. Redirecting to profile page');
+                window.location.replace("https://m25lazi.herokuapp.com/betaprofile.html");
             }
         }
 
