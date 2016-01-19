@@ -21,6 +21,9 @@ var server = app.listen(port_number, function () {
   var port = server.address().port;
   console.log("API app listening at http://%s:%s", host, port);
     
+    var id = process.env.CRIMSON_DB_ID;
+    console.log("DB ID : "+id);
+    
 });
 
 
