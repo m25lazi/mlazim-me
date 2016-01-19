@@ -94,6 +94,54 @@ app.post('/api/alpha/:user/:devicesecretkey', function (req, res) {
     
 });
 
+app.get('/api/alpha/:user/:devicesecretkey', function (req, res) {
+    console.log("GOT DATA FROM ARDUINO : "+JSON.stringify(req.body));
+    
+    var username = req.params.user;
+    var deviceSecretKey = req.params.devicesecretkey;
+    
+    var usernameRef = 'crimson/alpha/users/'+username;
+    crimsonDatabase.child(usernameRef).once("value", function(snap) {
+        console.log(snap.val());
+        var data = snap.val();
+        if(data){
+            if(data.devices[deviceSecretKey]){
+                    var sensorData = req.body.value;
+                    crimsonDatabase.child('crimson/alpha/devices/'+deviceSecretKey+'/data').once("value", function(snap) {
+                            console.log(snap.val());
+                            var data = snap.val();
+                            if(data){
+                                var result = -1;
+                                if(data.type === 'digital'){
+                                    if(data.value === true)
+                                        result = 1;
+                                    else
+                                        result = 0;
+                                }
+                                else{
+                                    result = data.value;
+                                }
+                                console.log('RESPONSE : '+result);
+                                res.end(JSON.stringify(result));
+                            }
+                            else{
+                                res.status(101).end();
+                            }
+                    });
+                
+            }
+            else{
+                res.status(403).end();
+            }
+            
+        }
+        else{
+            res.status(403).end();
+        }
+    });
+    
+});
+
 app.post('/api/alpha/user1', function (req, res) {
     console.log("GOT DATA FROM ARDUINO : "+JSON.stringify(req.body));
     
